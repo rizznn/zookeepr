@@ -162,6 +162,30 @@
         "hungry"
       ],
       "id": "16"
+    },
+    {
+      "name": "Kingkong",
+      "species": "Monkey",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "hungry",
+        "zany",
+        "loving",
+        "goofy"
+      ],
+      "id": "17"
+    },
+    {
+      "name": "Donkey",
+      "species": "Donkey",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "hungry",
+        "zany",
+        "loving",
+        "goofy"
+      ],
+      "id": "18"
     }
   ]
 }

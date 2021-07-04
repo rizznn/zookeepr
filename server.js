@@ -1,13 +1,18 @@
 const fs = require('fs');
 const path = require('path');
-const { animals } = require('./data/animals');
 const express = require('express');
+const { animals } = require('./data/animals');
+
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+// Express.js middleware that instructs the server to make certain files readily available and to not gate it behind a server endpoint.
+app.use(express.static('public'));
 
 // parse incoming string or array data
 // for parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
 // parse incoming JSON data
 // for parsing application/json
 app.use(express.json());
@@ -90,26 +95,13 @@ function validateAnimal(animal) {
     return true;
 }
 
-app.post('/api/animals', (req, res) => {
-    // set id based on what the next index of the array will be
-    req.body.id = animals.length.toString();
-  
-    // if any data in req.body is incorrect, send 400 error back
-    if (!validateAnimal(req.body)) {
-      res.status(400).send('The animal is not properly formatted.');
-    } else {
-      const animal = createNewAnimal(req.body, animals);
-      res.json(animal);
-    }
-});
-
 // call the filterByQuery() in the app.get() callback
 app.get('/api/animals', (req, res) => {
-  let results = animals;
-  if (req.query) {
-    results = filterByQuery(req.query, results);
-  }
-  res.json(results);
+    let results = animals;
+    if (req.query) {
+        results = filterByQuery(req.query, results);
+    }
+    res.json(results);
 });
 
 // requests for a specific animal
@@ -122,16 +114,40 @@ app.get('/api/animals/:id', (req, res) => {
     }
 });
 
+// validation
 app.post('/api/animals', (req, res) => {
     // req.body is where our incoming content will be
     // set id based on what the next index of the array will be
     req.body.id = animals.length.toString();
+  
+    // if any data in req.body is incorrect, send 400 error back
+    if (!validateAnimal(req.body)) {
+        res.status(400).send('The animal is not properly formatted.');
+    } else {
+        // add animal to json file and animals array in this function
+        const animal = createNewAnimal(req.body, animals);
+        res.json(animal);
+    }
+});
 
-    // add animal to json file and animals array in this function
-    const animal = createNewAnimal(req.body, animals);
+// route to index.html homepage
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
 
-    console.log(req.body);
-    res.json(req.body);
+// route to animals page
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+// route to zookeepers page
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+
+// wildcard route
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 app.listen(PORT, () => {
