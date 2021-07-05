@@ -186,6 +186,37 @@
         "goofy"
       ],
       "id": "18"
+    },
+    {
+      "name": "Harry",
+      "species": "horse",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "hungry, goofy"
+      ],
+      "id": "19"
+    },
+    {
+      "name": "Bryan",
+      "species": "Panda",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "hungry",
+        "anxious",
+        "loving"
+      ],
+      "id": "20"
+    },
+    {
+      "name": "Zany",
+      "species": "Chipmunk",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "hungry",
+        "zany",
+        "goofy"
+      ],
+      "id": "21"
     }
   ]
 }
